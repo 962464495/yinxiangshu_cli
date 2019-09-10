@@ -25,6 +25,8 @@ module.exports = {
       .set('@', resolve('src'))     // src目录的映射关系
       .set('_c', resolve('src/components')) // components目录的映射关系
       .set('_lib', resolve('src/libs')) // lib目录的映射关系
+      .set('_api', resolve('src/api/member.js'))  //api映射关系
+      .set('_tip', resolve('src/libs/view.js'))  //api映射关系
   },
   // 打包时不生成.map文件
   productionSourceMap: false,
@@ -48,18 +50,6 @@ module.exports = {
   configureWebpack: {
     devServer: {
       before (app) {
-        // 中间件
-        // app.use(function (req, res, next) {
-        //   // 检查token
-        //   if (/^\/api/.test(req.path)) { // 之校验/api开头的请求
-        //     if (req.path == '/api/login' || req.headers.token) {
-        //       next()
-        //     } else {
-        //       res.sendStatus(401) // 错误状态提示用户需要登录
-        //     }
-        //   }
-        // })
-
         app.get('/admin/member/getAdminMemberInfo', function (req, res) {
           res.json({
             'code': 1,
@@ -108,6 +98,67 @@ module.exports = {
                 }
               ]
             },
+            'msg': ''
+          })
+        })
+        app.get('/adminMenu', function (req, res) {
+          res.json({
+            'code': 1,
+            'data': [
+              {
+                title: '系统管理',
+                name: '/system',
+                id: 1,
+                expand: true,
+                menuType: 1,
+                sort: 1,
+                parent: 0,
+                children: [
+                  {
+                    title: '管理员管理',
+                    name: '/system/manager',
+                    id: 2,
+                    expand: true,
+                    menuType: 2,
+                    sort: 1,
+                    parent: 1,
+                    children: [
+                      {
+                        title: '添加菜单',
+                        name: '',
+                        id: 3,
+                        menuType: 3,
+                        sort: 1,
+                        expand: true,
+                        parent: 2,
+                        children: []
+                      },
+                    ]
+                  },
+                  {
+                    title: '角色管理',
+                    name: '/system/role',
+                    id: 4,
+                    expand: true,
+                    menuType: 2,
+                    sort: 2,
+                    parent: 1,
+                    children: [
+                      {
+                        title: '添加角色',
+                        name: '',
+                        id: 5,
+                        expand: true,
+                        menuType: 3,
+                        sort: 1,
+                        parent: 4,
+                        children: []
+                      },
+                    ]
+                  }
+                ]
+              }
+            ],
             'msg': ''
           })
         })
@@ -262,22 +313,6 @@ module.exports = {
             'msg': ''
           })
         })
-        // app.get('/admin/package/getPackageTypeInfo', function (req, res) {
-        //   res.json()
-        // })
-        // app.get('/admin/package/getPackageTypeInfo', function (req, res) {
-        //   res.json()
-        // })
-        // app.get('/admin/package/getPackageTypeInfo', function (req, res) {
-        //   res.json()
-        // })
-        // app.get('/admin/package/getPackageTypeInfo', function (req, res) {
-        //   res.json()
-        // })
-        // app.get('/admin/package/getPackageTypeInfo', function (req, res) {
-        //   res.json()
-        // })
-
       }
     }
   }

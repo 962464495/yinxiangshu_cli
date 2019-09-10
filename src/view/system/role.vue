@@ -73,127 +73,126 @@
   </div>
 </template>
 <script>
-import { getAdminMemberLogInfo, changeAdminMemberLogStatus, getPackageTypeInfo, passMember } from '@/api/member'
+  import { getAdminMemberLogInfo, changeAdminMemberLogStatus, getPackageTypeInfo, passMember } from '@/api/member'
 
-export default {
-  data () {
-    return {
-      showAddModal: false,
-      curIndex: 0,
-      addForm: {
-        id: 0,
-        package_type_info_id: '',
-        package_info_year: '',
-        status: 1
-      },
-      tableData: [],
-      searchStatus: [
-        { value: -1, label: '全部' },
-        { value: 0, label: '未确认' },
-        { value: 1, label: '已通过' },
-        { value: 2, label: '未通过' }
-      ],
-      searchType: [],
-      tableColumns: [
-        { title: '名称', key: 'name' },
-        { title: '权限', key: 'phone' },
-        { title: '状态', slot: 'status' },
-        { title: '操作', slot: 'action' }
-      ],
-      search: {
-        name: '',
-        phone: '',
-        typeId: -1,
-        status: -1,
-        pageNum: 1,
-        pageSize: 10,
-        total: 0
-      },
-      selectType: []
-    }
-  },
-  mounted () {
-    this.getList()
-    this.getPackageType()
-  },
-  methods: {
-    getList () {
-      var params = this.search
-      getAdminMemberLogInfo(params).then(res => {
-        if (res.code == 1) {
-          this.search.total = res.data.count
-          if (res.data.res == null) {
-            this.tableData = []
-          } else {
-            this.tableData = res.data.res
-          }
-        }
-      })
+  export default {
+    data () {
+      return {
+        showAddModal: false,
+        curIndex: 0,
+        addForm: {
+          id: 0,
+          package_type_info_id: '',
+          package_info_year: '',
+          status: 1
+        },
+        tableData: [],
+        searchStatus: [
+          { value: -1, label: '全部' },
+          { value: 0, label: '未确认' },
+          { value: 1, label: '已通过' },
+          { value: 2, label: '未通过' }
+        ],
+        searchType: [],
+        tableColumns: [
+          { title: '名称', key: 'name' },
+          { title: '状态', slot: 'status' },
+          { title: '操作', slot: 'action' }
+        ],
+        search: {
+          name: '',
+          phone: '',
+          typeId: -1,
+          status: -1,
+          pageNum: 1,
+          pageSize: 10,
+          total: 0
+        },
+        selectType: []
+      }
     },
-    getPackageType () {
-      getPackageTypeInfo({}).then(res => {
-        if (res.code == 1) {
-          var data = res.data
-          this.selectType = data
-
-          var all = [{ 'id': -1, 'name': '全部' }]
-          this.searchType = all.concat(data)
-        }
-      })
-    },
-
-    changePage (page) {
-      this.search.pageNum = page
-      this.tableData = this.getList()
-    },
-    handleSearch () {
+    mounted () {
       this.getList()
+      this.getPackageType()
     },
-    changeStatus (index, status) {
-      var id = parseInt(this.tableData[index].id)
-      changeAdminMemberLogStatus({ 'id': id, 'status': status }).then(res => {
-        if (res.code == 1) {
-          this.tableData[index].status = status
-        } else {
-          this.$Notice.warning({
-            title: res.msg
-          })
-        }
-      })
-    },
-    pass (row, index) {
-      this.showAddModal = true
-      this.addForm.id = row.id
-      this.addForm.package_type_info_id = row.package_type_info_id
-      this.addForm.package_info_year = row.package_info_year
-      this.curIndex = index
-    },
-    doPass () {
-      this.showAddModal = false
-      var params = {}
-      params['id'] = parseInt(this.addForm.id)
-      params['package_type_info_id'] = parseInt(this.addForm.package_type_info_id)
-      params['package_info_year'] = parseInt(this.addForm.package_info_year)
-      params['status'] = parseInt(this.addForm.status)
-      changeAdminMemberLogStatus(params).then(res => {
-        if (res.code == 1) {
-          this.tableData[this.curIndex].status = this.addForm.status
-          this.tableData[this.curIndex].package_info_year = this.addForm.package_info_year
-          this.tableData[this.curIndex].package_info_amount = res.data
-          for (var i = 0; i < this.selectType.length; i++) {
-            if (this.selectType[i].id == this.addForm.package_type_info_id) {
-              this.tableData[this.curIndex].package_type_name = this.selectType[i].name
+    methods: {
+      getList () {
+        var params = this.search
+        getAdminMemberLogInfo(params).then(res => {
+          if (res.code == 1) {
+            this.search.total = res.data.count
+            if (res.data.res == null) {
+              this.tableData = []
+            } else {
+              this.tableData = res.data.res
             }
           }
-        } else {
-          this.$Notice.warning({
-            title: res.msg
-          })
-        }
-      })
+        })
+      },
+      getPackageType () {
+        getPackageTypeInfo({}).then(res => {
+          if (res.code == 1) {
+            var data = res.data
+            this.selectType = data
+
+            var all = [{ 'id': -1, 'name': '全部' }]
+            this.searchType = all.concat(data)
+          }
+        })
+      },
+
+      changePage (page) {
+        this.search.pageNum = page
+        this.tableData = this.getList()
+      },
+      handleSearch () {
+        this.getList()
+      },
+      changeStatus (index, status) {
+        var id = parseInt(this.tableData[index].id)
+        changeAdminMemberLogStatus({ 'id': id, 'status': status }).then(res => {
+          if (res.code == 1) {
+            this.tableData[index].status = status
+          } else {
+            this.$Notice.warning({
+              title: res.msg
+            })
+          }
+        })
+      },
+      pass (row, index) {
+        this.showAddModal = true
+        this.addForm.id = row.id
+        this.addForm.package_type_info_id = row.package_type_info_id
+        this.addForm.package_info_year = row.package_info_year
+        this.curIndex = index
+      },
+      doPass () {
+        this.showAddModal = false
+        var params = {}
+        params['id'] = parseInt(this.addForm.id)
+        params['package_type_info_id'] = parseInt(this.addForm.package_type_info_id)
+        params['package_info_year'] = parseInt(this.addForm.package_info_year)
+        params['status'] = parseInt(this.addForm.status)
+        changeAdminMemberLogStatus(params).then(res => {
+          if (res.code == 1) {
+            this.tableData[this.curIndex].status = this.addForm.status
+            this.tableData[this.curIndex].package_info_year = this.addForm.package_info_year
+            this.tableData[this.curIndex].package_info_amount = res.data
+            for (var i = 0; i < this.selectType.length; i++) {
+              if (this.selectType[i].id == this.addForm.package_type_info_id) {
+                this.tableData[this.curIndex].package_type_name = this.selectType[i].name
+              }
+            }
+          } else {
+            this.$Notice.warning({
+              title: res.msg
+            })
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style>

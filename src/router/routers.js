@@ -37,59 +37,9 @@ export default [
         meta: {
           title: '首页',
           notCache: true,
-          icon: 'md-home'
+          icon: '_home'
         },
         component: () => import('@/view/home/home.vue')
-      }
-    ]
-  },
-  {
-    path: '/member',
-    name: 'member',
-    meta: {
-      icon: 'md-card',
-      title: '会员管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: '/member',
-        name: 'member-member',
-        meta: {
-          icon: 'ios-people',
-          title: '会员管理'
-        },
-        component: () => import('@/view/member/member.vue')
-      },
-    ]
-  },
-  {
-    path: '/config',
-    name: 'config',
-    meta: {
-      icon: 'md-cog',
-      title: '配置管理',
-      hideInMenu: true
-    },
-    component: Main,
-    children: [
-      {
-        path: '/config/info',
-        name: 'config-info',
-        meta: {
-          icon: 'md-reorder',
-          title: '基础配置'
-        },
-        component: () => import('@/view/member/member.vue')
-      },
-      {
-        path: '/config/about',
-        name: 'config-about',
-        meta: {
-          icon: 'ios-information-circle',
-          title: '关于我们'
-        },
-        component: () => import('@/view/member/member.vue')
       }
     ]
   },
@@ -97,7 +47,7 @@ export default [
     path: '/system',
     name: 'system',
     meta: {
-      icon: 'md-laptop',
+      icon: '_setup',
       title: '系统管理'
     },
     component: Main,
@@ -106,7 +56,7 @@ export default [
         path: '/system/manager',
         name: 'system-member',
         meta: {
-          icon: 'ios-person',
+          icon: '_guanliyuan',
           title: '管理员管理'
         },
         component: () => import('@/view/system/manager.vue')
@@ -115,7 +65,7 @@ export default [
         path: '/system/role',
         name: 'system-role',
         meta: {
-          icon: 'ios-people',
+          icon: '_jiaoseguanli',
           title: '角色管理'
         },
         component: () => import('@/view/system/role.vue')
@@ -124,7 +74,7 @@ export default [
         path: '/system/menu',
         name: 'system-menu',
         meta: {
-          icon: 'md-menu',
+          icon: '_permissions-user',
           title: '权限菜单'
         },
         component: () => import('@/view/system/menu.vue')

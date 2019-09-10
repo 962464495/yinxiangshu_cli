@@ -18,3 +18,5 @@ export const changeAdminMemberLogStatus = (data) => post('admin/package/changeAd
 export const savePackageInfo = (data) => post('admin/package/savePackageInfo', data)
 // 修改会员包状态
 export const changePackageStatus = (data) => post('admin/package/changePackageStatus', data)
+//获取权限菜单列表
+export const GetRoleMenuList = (data) => get('adminMenu', data)

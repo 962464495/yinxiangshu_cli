@@ -1,0 +1,45 @@
+.iconfont {
+  font-size: 16px !important;
+}
+
+.flex_row_space_between {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.role-menu-tree ul li {
+  border-left: 1px solid gainsboro;
+  border-top: 1px solid gainsboro;
+  border-bottom: 1px solid gainsboro;
+  padding: 5px 0px 5px 10px;
+}
+
+.role-menu-tree > ul > li {
+  border-right: 1px solid gainsboro;
+}
+
+.demo-spin-icon-load {
+  animation: ani-demo-spin 1s linear infinite;
+}
+
+@keyframes ani-demo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.demo-spin-col {
+  height: 100px;
+  position: relative;
+  border: 1px solid #eee;
+}
